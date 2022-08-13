@@ -2,10 +2,8 @@ package frc.robot.commands.autoSubsystems;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.*;
 import frc.robot.subsystems.swerve.SwerveDrive;
 
 public class DefaultDrive extends CommandBase {
@@ -15,7 +13,6 @@ public class DefaultDrive extends CommandBase {
   private final boolean m_fieldRelative;
   private double heading;
   private PIDController pid;
-  private double multiplier;
 
   /**
    * Creates a new DefaultDrive.
@@ -36,7 +33,6 @@ public class DefaultDrive extends CommandBase {
     m_ySpeed = 0;
     m_rot = 0;
     m_fieldRelative = true;
-    this.multiplier = multiplier;
 
   }
 

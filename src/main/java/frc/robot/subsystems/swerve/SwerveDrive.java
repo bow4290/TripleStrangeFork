@@ -139,7 +139,6 @@ public class SwerveDrive extends SubsystemBase {
     double hub = 2.64;
     double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0.0);
     double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0);
-    // TODO: assign horizontal position
     if (SmartDashboard.getBoolean("Long Range", true)) {
       horPos = (hub - height) / Math.tan(Math.toRadians(ty + 35.5)) + 0.6;
     } else {
