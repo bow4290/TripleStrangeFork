@@ -9,6 +9,7 @@ package frc.robot.subsystems.swerve;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -63,7 +64,7 @@ public class SwerveDrive extends SubsystemBase {
   public ChassisSpeeds currentMovement;
 
   // The gyro sensor
-  private static final Gyro navX = new AHRS(SPI.Port.kMXP);
+  private static final Gyro navX = new ADXRS450_Gyro();
   boolean gyroReset;
 
   // Odometry class for tracking robot pose
@@ -97,6 +98,7 @@ public class SwerveDrive extends SubsystemBase {
 
   @Override
   public void periodic() {
+    navX.calibrate();
     // Update the odometry in the periodic block
     m_odometry.update(
         getAngle(),
