@@ -96,8 +96,8 @@ public class Robot extends TimedRobot {
     // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     m_autonomousCommand = choose.getSelected();
 
-    m_robotContainer.swerve.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
-    m_robotContainer.swerve.resetOdometryTur();
+    RobotContainer.swerve.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
+    RobotContainer.swerve.resetOdometryTur();
     // m_robotContainer.climb.extend();
 
     // schedule the autonomous command (example)

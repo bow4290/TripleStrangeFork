@@ -7,11 +7,8 @@
 
 package frc.robot.subsystems.swerve;
 
-import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,7 +16,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Electrical;
@@ -60,7 +56,6 @@ public class SwerveDrive extends SubsystemBase {
       ModuleConstants.FR_ENC_OFFSET);
 
   private SwerveModuleState[] swerveModuleStates;
-  private SwerveModuleState[] initStates;
   private double horPos;
   public ChassisSpeeds currentMovement;
 

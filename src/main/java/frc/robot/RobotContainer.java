@@ -29,7 +29,6 @@ import frc.robot.commands.autoSubsystems.DefaultDrive;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static SwerveDrive swerve;
-  private final SendableChooser<Command> choose;
   public static final SendableChooser<String> color = new SendableChooser<String>();
 
   /**
@@ -37,8 +36,6 @@ public class RobotContainer {
    */
   public RobotContainer(SendableChooser<Command> choose) {
     swerve = new SwerveDrive();
-
-    this.choose = choose;
 
     SmartDashboard.putData(swerve);
     SmartDashboard.putBoolean("Starts on right?", true);

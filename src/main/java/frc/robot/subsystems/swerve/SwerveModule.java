@@ -19,7 +19,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
 import frc.robot.Constants.ModuleConstants;
-import frc.robot.subsystems.swerve.AbsoluteEncoder;
 
 public class SwerveModule {
   // motors
