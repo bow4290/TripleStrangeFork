@@ -11,6 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -76,6 +77,7 @@ public class SwerveDrive extends SubsystemBase {
    * Creates a new DriveSubsystem.
    */
   public SwerveDrive() {
+    navX.calibrate();
   }
 
   /**
@@ -98,7 +100,10 @@ public class SwerveDrive extends SubsystemBase {
 
   @Override
   public void periodic() {
-    navX.calibrate();
+    //Timer timer = new Timer();
+    //timer.start();
+    //System.err.println("navX cali took: " + timer.get() + "s");
+    //timer.reset();
     // Update the odometry in the periodic block
     m_odometry.update(
         getAngle(),
@@ -106,54 +111,60 @@ public class SwerveDrive extends SubsystemBase {
         m_rearLeft.getState(),
         m_frontRight.getState(),
         m_rearRight.getState());
-    SmartDashboard.putNumber("FLSteering", m_frontLeft.m_absoluteEncoder.getAngle());
-    SmartDashboard.putNumber("FRSteering", m_frontRight.m_absoluteEncoder.getAngle());
-    SmartDashboard.putNumber("BLSteering", m_rearLeft.m_absoluteEncoder.getAngle());
-    SmartDashboard.putNumber("BRSteering", m_rearRight.m_absoluteEncoder.getAngle());
-    SmartDashboard.putNumber("FLSteeringDeg", m_frontLeft.m_absoluteEncoder.getAngle() * 180.0 / Math.PI);
-    SmartDashboard.putNumber("FRSteeringDeg", m_frontRight.m_absoluteEncoder.getAngle() * 180.0 / Math.PI);
-    SmartDashboard.putNumber("BLSteeringDeg", m_rearLeft.m_absoluteEncoder.getAngle() * 180.0 / Math.PI);
-    SmartDashboard.putNumber("BRSteeringDeg", m_rearRight.m_absoluteEncoder.getAngle() * 180.0 / Math.PI);
-    SmartDashboard.putNumber("FLSteerNEO", m_frontLeft.m_turningEncoder.getPosition());
-    SmartDashboard.putNumber("FRSteerNEO", m_frontRight.m_turningEncoder.getPosition());
-    SmartDashboard.putNumber("BLSteerNEO", m_rearLeft.m_turningEncoder.getPosition());
-    SmartDashboard.putNumber("BRSteerNEO", m_rearRight.m_turningEncoder.getPosition());
-    SmartDashboard.putNumber("FLneo", m_frontLeft.getState().angle.getRadians());
-    SmartDashboard.putNumber("FRneo", m_frontRight.getState().angle.getRadians());
-    SmartDashboard.putNumber("BLneo", m_rearLeft.getState().angle.getRadians());
-    SmartDashboard.putNumber("BRneo", m_rearRight.getState().angle.getRadians());
-    SmartDashboard.putNumber("x", getPose().getTranslation().getX());
-    SmartDashboard.putNumber("y", getPose().getTranslation().getY());
-    SmartDashboard.putNumber("r", getPose().getRotation().getDegrees());
-    SmartDashboard.putNumber("GYRO ANGLE", navX.getAngle());
-    SmartDashboard.putNumber("TurnRate", getTurnRate());
+    //System.err.println("modometry took: " + timer.get() + "s");
+    //timer.reset();
+//    SmartDashboard.putNumber("FLSteering", m_frontLeft.m_absoluteEncoder.getAngle());
+//    SmartDashboard.putNumber("FRSteering", m_frontRight.m_absoluteEncoder.getAngle());
+//    SmartDashboard.putNumber("BLSteering", m_rearLeft.m_absoluteEncoder.getAngle());
+//    SmartDashboard.putNumber("BRSteering", m_rearRight.m_absoluteEncoder.getAngle());
+//    SmartDashboard.putNumber("FLSteeringDeg", m_frontLeft.m_absoluteEncoder.getAngle() * 180.0 / Math.PI);
+//    SmartDashboard.putNumber("FRSteeringDeg", m_frontRight.m_absoluteEncoder.getAngle() * 180.0 / Math.PI);
+//    SmartDashboard.putNumber("BLSteeringDeg", m_rearLeft.m_absoluteEncoder.getAngle() * 180.0 / Math.PI);
+//    SmartDashboard.putNumber("BRSteeringDeg", m_rearRight.m_absoluteEncoder.getAngle() * 180.0 / Math.PI);
+//    SmartDashboard.putNumber("FLSteerNEO", m_frontLeft.m_turningEncoder.getPosition());
+//    SmartDashboard.putNumber("FRSteerNEO", m_frontRight.m_turningEncoder.getPosition());
+//    SmartDashboard.putNumber("BLSteerNEO", m_rearLeft.m_turningEncoder.getPosition());
+//    SmartDashboard.putNumber("BRSteerNEO", m_rearRight.m_turningEncoder.getPosition());
+//    SmartDashboard.putNumber("FLneo", m_frontLeft.getState().angle.getRadians());
+//    SmartDashboard.putNumber("FRneo", m_frontRight.getState().angle.getRadians());
+//    SmartDashboard.putNumber("BLneo", m_rearLeft.getState().angle.getRadians());
+//    SmartDashboard.putNumber("BRneo", m_rearRight.getState().angle.getRadians());
+//    SmartDashboard.putNumber("x", getPose().getTranslation().getX());
+//    SmartDashboard.putNumber("y", getPose().getTranslation().getY());
+//    SmartDashboard.putNumber("r", getPose().getRotation().getDegrees());
+//    SmartDashboard.putNumber("GYRO ANGLE", navX.getAngle());
+//    SmartDashboard.putNumber("TurnRate", getTurnRate());
     m_odometryTur.update(getAngle(),
         m_frontLeft.getState(),
         m_rearLeft.getState(),
         m_frontRight.getState(),
         m_rearRight.getState());
+    //System.err.println("odo turn took: " + timer.get() + "s");
+    //timer.reset();
 
-    SmartDashboard.putNumber("TurOdomX", m_odometryTur.getPoseMeters().getX());
-    SmartDashboard.putNumber("TurOdomY", m_odometryTur.getPoseMeters().getY());
-    SmartDashboard.putNumber("TurOdomR", m_odometryTur.getPoseMeters().getRotation().getRadians());
+//    SmartDashboard.putNumber("TurOdomX", m_odometryTur.getPoseMeters().getX());
+//    SmartDashboard.putNumber("TurOdomY", m_odometryTur.getPoseMeters().getY());
+//    SmartDashboard.putNumber("TurOdomR", m_odometryTur.getPoseMeters().getRotation().getRadians());
 
-    double height = 0.864; // of limelight
-    double hub = 2.64;
-    double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0.0);
-    double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0);
-    if (SmartDashboard.getBoolean("Long Range", true)) {
-      horPos = (hub - height) / Math.tan(Math.toRadians(ty + 35.5)) + 0.6;
-    } else {
-      horPos = (hub - height) / Math.tan(Math.toRadians(ty + 35.5 + 12)) + 0.6;
-    }
+//    double height = 0.864; // of limelight
+//    double hub = 2.64;
+//    double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0.0);
+//    double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0);
+//    if (SmartDashboard.getBoolean("Long Range", true)) {
+//      horPos = (hub - height) / Math.tan(Math.toRadians(ty + 35.5)) + 0.6;
+//    } else {
+//      horPos = (hub - height) / Math.tan(Math.toRadians(ty + 35.5 + 12)) + 0.6;
+//    }
 
     currentMovement = SwerveConstants.kDriveKinematics.toChassisSpeeds(
       m_frontLeft.getState(),
       m_rearLeft.getState(),
       m_frontRight.getState(),
       m_rearRight.getState());
+    //System.err.println("curmov took: " + timer.get() + "s");
+    //timer.reset();
 
-    SmartDashboard.putNumber("goalDist", horPos);
+//    SmartDashboard.putNumber("goalDist", horPos);
   }
 
   /**
@@ -195,17 +206,21 @@ public class SwerveDrive extends SubsystemBase {
    */
   @SuppressWarnings("ParameterName")
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-
+    //Timer timer = new Timer();
+    //timer.start();
     swerveModuleStates = SwerveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
             xSpeed, ySpeed, rot, getAngle())
             : new ChassisSpeeds(xSpeed, ySpeed, rot));
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates,
         SwerveConstants.kMaxSpeedMetersPerSecond);
+    //System.err.println("module states took: " + timer.get() + "s");
+    //timer.reset();
     m_frontLeft.setDesiredState(swerveModuleStates[0]);
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_rearLeft.setDesiredState(swerveModuleStates[2]);
     m_rearRight.setDesiredState(swerveModuleStates[3]);
+    //System.err.println("settings states took: " + timer.get() + "s");
   }
 
   /**

@@ -131,14 +131,14 @@ public final class Constants {
 
   public static final class Electrical {
     // Swerve Motor Controller CAN ID's
-    public static final int FL_DRIVE = 6;
-    public static final int FR_DRIVE = 13;
-    public static final int BL_DRIVE = 5;
-    public static final int BR_DRIVE = 14;
-    public static final int FL_STEER = 7;
-    public static final int FR_STEER = 12;
-    public static final int BL_STEER = 4;
-    public static final int BR_STEER = 15;
+    public static final int FL_DRIVE = 4;//
+    public static final int FR_DRIVE = 3;//
+    public static final int BL_DRIVE = 2;//
+    public static final int BR_DRIVE = 13;
+    public static final int FL_STEER = 8;//
+    public static final int FR_STEER = 7;//
+    public static final int BL_STEER = 6;//
+    public static final int BR_STEER = 10;//
 
     public static final int climbL = 2;
     public static final int climbR = 3;

@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.swerve.SwerveDrive;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.JoystickButtons;
+import frc.robot.commands.autoSubsystems.DefaultDrive;
 
-import edu.wpi.first.cameraserver.CameraServer;
+//import edu.wpi.first.cameraserver.CameraServer;
 
 
 /**
@@ -47,7 +49,7 @@ public class RobotContainer {
 
     SmartDashboard.putBoolean("Blind me", true);
 
-    CameraServer.startAutomaticCapture();
+    //CameraServer.startAutomaticCapture();
 
     SmartDashboard.putString("DriverStation", DriverStation.getAlliance().toString());
 
@@ -69,7 +71,7 @@ public class RobotContainer {
   }
 
   public void configDefaults() {
-
+    swerve.setDefaultCommand(new DefaultDrive(swerve, JoystickButtons.m_driverController, 1));
     swerve.resetEncoders();
   }
 

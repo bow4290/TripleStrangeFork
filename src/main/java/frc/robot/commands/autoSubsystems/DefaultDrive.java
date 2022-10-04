@@ -2,6 +2,7 @@ package frc.robot.commands.autoSubsystems;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.swerve.SwerveDrive;
@@ -32,7 +33,7 @@ public class DefaultDrive extends CommandBase {
     m_xSpeed = 0;
     m_ySpeed = 0;
     m_rot = 0;
-    m_fieldRelative = true;
+    m_fieldRelative = false;
 
   }
 
@@ -45,10 +46,18 @@ public class DefaultDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //Timer timer = new Timer();
+    //timer.start();
+
     if (m_drive.getGyroReset()) {
       heading = m_drive.getAngle().getDegrees();
       m_drive.setGyroReset(false);
     }
+
+
+    //System.err.println("getGyroReset took: " + timer.get() + "s");
+    //timer.reset();
+    //System.err.println(m_joystick.getRawAxis(1));
 
     m_xSpeed = 0;
     m_ySpeed = 0;
@@ -67,7 +76,10 @@ public class DefaultDrive extends CommandBase {
     }
 
     double curHead = m_drive.getAngle().getDegrees();
+    //System.err.println("angle: " + curHead);
 
+    //System.err.println("input math took: " + timer.get() + "s");
+    //timer.reset();
     if (m_rot == 0) {
       m_drive.drive(m_xSpeed, m_ySpeed, pid.calculate(curHead, heading), m_fieldRelative);
 
@@ -76,11 +88,15 @@ public class DefaultDrive extends CommandBase {
       heading = m_drive.getAngle().getDegrees();
     }
 
+    //System.err.println("driving took: " + timer.get() + "s");
+    //timer.reset();
+
     // x for zero heading
     if (m_joystick.getRawButtonPressed(3)) {
       m_drive.zeroHeading();
     }
-
+    //System.err.println("zeroHeading took: " + timer.get() + "s");
+    //timer.reset();
   }
 
   // Returns true when the command should end.
