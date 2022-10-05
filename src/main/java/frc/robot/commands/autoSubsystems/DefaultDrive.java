@@ -65,10 +65,10 @@ public class DefaultDrive extends CommandBase {
     // y should be 0 when robot is facing ^ (and intake is facing driver station)
     // x should be negative when intake facing driver station %
     if (Math.abs(m_joystick.getRawAxis(1)) > 0.15) {
-      m_ySpeed = -m_joystick.getRawAxis(1) * Constants.SwerveConstants.kMaxSpeedMetersPerSecond;
+      m_ySpeed = Math.pow(-m_joystick.getRawAxis(1), 4) * Constants.SwerveConstants.kMaxSpeedMetersPerSecond;
     }
     if (Math.abs(m_joystick.getRawAxis(0)) > 0.15) {
-      m_xSpeed = m_joystick.getRawAxis(0) * Constants.SwerveConstants.kMaxSpeedMetersPerSecond;
+      m_xSpeed = Math.pow(m_joystick.getRawAxis(0),4) * Constants.SwerveConstants.kMaxSpeedMetersPerSecond;
     }
     if (Math.abs(m_joystick.getRawAxis(4)) > 0.2) {
       m_rot = -m_joystick.getRawAxis(4) * 2 * Math.PI;

@@ -12,6 +12,7 @@ public class AbsoluteEncoder extends AnalogInput {
      */
     public AbsoluteEncoder(int channel, double angleOffset) {
         this(channel, angleOffset, false);
+        this.angleOffset = getAngle();
     }
 
     /**
@@ -22,7 +23,7 @@ public class AbsoluteEncoder extends AnalogInput {
      */
     public AbsoluteEncoder(int channel, double angleOffset, boolean reversed) {
         super(channel);
-        this.angleOffset = Math.toRadians(angleOffset);
+        this.angleOffset = angleOffset;
         this.reversed = reversed;
     }
 

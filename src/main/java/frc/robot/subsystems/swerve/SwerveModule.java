@@ -58,7 +58,7 @@ public class SwerveModule {
     m_driveEncoder = m_driveMotor.getEncoder();
     m_turningEncoder = m_turningMotor.getEncoder();
     m_absoluteEncoder = new AbsoluteEncoder(absoluteEncoderChannel, angleOffset);
-
+    System.err.println("ABSOLUTE ENCODER CALIBRATION " + m_absoluteEncoder.getCalibration() + " DRIVE CHANNEL: "+ driveMotorChannel);
     // Set the distance per pulse for the drive encoder. We can simply use the
     // distance traveled for one rotation of the wheel divided by the encoder
     // resolution (ratio of distance traveled by wheel to distance traveled by
