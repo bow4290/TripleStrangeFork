@@ -35,6 +35,7 @@ public class SwerveModule {
   // steering pid
   private SparkMaxPIDController m_pidController;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
+  private int driveMotorChannelT;
 
   // drive pid
   // private CANPIDController m_drivepidController;
@@ -48,7 +49,7 @@ public class SwerveModule {
    */
   public SwerveModule(int driveMotorChannel, int turningMotorChannel, int absoluteEncoderChannel, double encoderCPR,
       boolean turningEncoderReversed, double angleOffset) {
-
+    driveMotorChannelT = driveMotorChannel;
     m_driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
     m_turningMotor = new CANSparkMax(turningMotorChannel, MotorType.kBrushless);
 
@@ -58,7 +59,6 @@ public class SwerveModule {
     m_driveEncoder = m_driveMotor.getEncoder();
     m_turningEncoder = m_turningMotor.getEncoder();
     m_absoluteEncoder = new AbsoluteEncoder(absoluteEncoderChannel, angleOffset);
-    System.err.println("ABSOLUTE ENCODER CALIBRATION " + m_absoluteEncoder.getCalibration() + " DRIVE CHANNEL: "+ driveMotorChannel);
     // Set the distance per pulse for the drive encoder. We can simply use the
     // distance traveled for one rotation of the wheel divided by the encoder
     // resolution (ratio of distance traveled by wheel to distance traveled by
@@ -123,7 +123,8 @@ public class SwerveModule {
    * @param state Desired state with speed and angle.
    */
   public void setDesiredState(SwerveModuleState state) {
-
+    System.err.println("ABSOLUTE ENCODER CALIBRATION " + m_absoluteEncoder.getCalibration() + " DRIVE CHANNEL: "+ driveMotorChannelT);
+    System.out.println("Info from system.out");
     double desiredDrive = state.speedMetersPerSecond / Constants.SwerveConstants.kMaxSpeedMetersPerSecond;
 
     if (Math.abs(desiredDrive) < 0.05) {
