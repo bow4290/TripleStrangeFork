@@ -9,11 +9,14 @@
 package frc.robot.subsystems.swerve;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANAnalog;
+import com.revrobotics.CANAnalog.AnalogMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax.IdleMode;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -29,13 +32,15 @@ public class SwerveModule {
   // encoders
   final RelativeEncoder m_driveEncoder;
   final RelativeEncoder m_turningEncoder;
-  final AbsoluteEncoder m_absoluteEncoder;
+//  final CANAnalog m_absoluteEncoder;
 
   // final AbsoluteEncoder absoluteEncoder;
 
   // steering pid
   private SparkMaxPIDController m_pidController;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
+  private double id = Math.random();
+  private double set = 0.0;
 
   // drive pid
   // private CANPIDController m_drivepidController;
@@ -47,7 +52,7 @@ public class SwerveModule {
    * @param driveMotorChannel   ID for the drive motor.
    * @param turningMotorChannel ID for the turning motor.
    */
-  public SwerveModule(int driveMotorChannel, int turningMotorChannel, int absoluteEncoderChannel, double encoderCPR,
+  public SwerveModule(int driveMotorChannel, int turningMotorChannel, int achannelignored, double encoderCPR,
       boolean turningEncoderReversed, double angleOffset) {
 
     m_driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
@@ -58,7 +63,7 @@ public class SwerveModule {
 
     m_driveEncoder = m_driveMotor.getEncoder();
     m_turningEncoder = m_turningMotor.getEncoder();
-    m_absoluteEncoder = new AbsoluteEncoder(absoluteEncoderChannel, angleOffset);
+    //m_absoluteEncoder = new CANAnalog(m_turningMotor, AnalogMode.kAbsolute);
 
     // Set the distance per pulse for the drive encoder. We can simply use the
     // distance traveled for one rotation of the wheel divided by the encoder
@@ -74,6 +79,7 @@ public class SwerveModule {
     // divided by the encoder resolution.
     m_turningEncoder.setPositionConversionFactor(ModuleConstants.kSteerEncoderDistancePerPulse);
     m_turningEncoder.setVelocityConversionFactor(ModuleConstants.kSteerEncoderDistancePerPulse / 60.);
+    //m_absoluteEncoder.setPositionConversionFactor(encoderCPR);
     // m_absoluteEncoder.setPositionConversionFactor(encoderCPR);
 
     // Limit the PID Controller's input range between -pi and pi and set the input
@@ -113,6 +119,7 @@ public class SwerveModule {
    * @return The current state of the module.
    */
   public SwerveModuleState getState() {
+    SmartDashboard.putNumber("Turning Error" + id, m_turningEncoder.getPosition() - set);
     return new SwerveModuleState(
         m_driveEncoder.getVelocity() + m_turningEncoder.getVelocity() * ModuleConstants.kWheelDiameterMeters / 2,
         new Rotation2d(m_turningEncoder.getPosition()));
@@ -151,6 +158,7 @@ public class SwerveModule {
     // m_driveMotor.set(desiredDrive + Math.cos(steeringError));
     m_driveMotor.set(desiredDrive);
     m_pidController.setReference(steeringSetpoint, ControlType.kPosition);
+    set = steeringSetpoint;
   }
 
   /**
@@ -159,7 +167,8 @@ public class SwerveModule {
 
   public void resetEncoders() {
     m_driveEncoder.setPosition(0);
-    m_turningEncoder.setPosition(-m_absoluteEncoder.getAngle());
+ //   m_turningEncoder.setPosition(-m_absoluteEncoder.getAngle());
+    m_turningEncoder.setPosition(0);
   }
 
   /**
